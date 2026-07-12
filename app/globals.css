@@ -1,26 +1,295 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0.004 264);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.004 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.004 264);
+  --primary: oklch(0.18 0.006 264);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.97 0.003 264);
+  --secondary-foreground: oklch(0.18 0.006 264);
+  --muted: oklch(0.97 0.003 264);
+  --muted-foreground: oklch(0.48 0.006 264);
+  --accent: oklch(0.96 0.008 280);
+  --accent-foreground: oklch(0.18 0.006 264);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.923 0.004 264);
+  --input: oklch(0.923 0.004 264);
+  --ring: oklch(0.6 0.02 264);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ambient decorative glows — bold, saturated color washes so light mode reads
+     as premium rather than flat white. Tuned to be clearly visible at a glance. */
+  --glow-1: oklch(0.62 0.2 290 / 30%);
+  --glow-2: oklch(0.68 0.19 235 / 26%);
+  --glow-3: oklch(0.76 0.17 55 / 20%);
+  --glow-strong: oklch(0.56 0.22 290 / 36%);
+
+  /* soft, layered card shadows — a visible color tint mixed into the drop shadow instead of flat gray */
+  --shadow-surface: 0 1px 2px rgba(15, 15, 20, 0.06), 0 16px 32px -16px rgba(88, 40, 160, 0.22);
+  --shadow-surface-hover: 0 2px 4px rgba(15, 15, 20, 0.07), 0 0 40px -10px var(--glow-1),
+    0 24px 44px -14px rgba(88, 40, 160, 0.28);
+
+  /* neutral tint pair used for avatar/icon placeholder gradients */
+  --avatar-glow-a: oklch(0.16 0.004 264 / 8%);
+  --avatar-glow-b: oklch(0.16 0.004 264 / 3%);
+
+  /* light-mode-only premium accents — decorative gradients used for chips, badges,
+     pricing highlight and stat numbers. Dark mode intentionally does not define
+     these; every consuming class carries an explicit dark: override so dark mode
+     stays pixel-identical. */
+  --chip-gradient: linear-gradient(135deg, oklch(0.86 0.09 290), oklch(0.85 0.1 235));
+  --badge-gradient: linear-gradient(135deg, oklch(0.6 0.19 290), oklch(0.58 0.16 250));
+  --pricing-highlight: linear-gradient(
+    160deg,
+    oklch(0.94 0.05 290),
+    oklch(0.93 0.055 250) 55%,
+    oklch(0.92 0.06 55 / 80%)
+  );
+  --pricing-ring: oklch(0.58 0.19 285 / 55%);
+  --counter-gradient: linear-gradient(135deg, oklch(0.22 0.01 264), oklch(0.42 0.19 285));
+  --accent-border: oklch(0.6 0.16 285 / 35%);
+
+  /* hero rotating-word accent (used in both themes — see .dark below for its counterpart) */
+  --hero-word-gradient: linear-gradient(135deg, oklch(0.55 0.22 290), oklch(0.5 0.2 250));
+  --hero-word-accent: oklch(0.55 0.22 290);
+
+  /* logo mark gradient stops (same brand violet→blue as the hero accent) */
+  --logo-color-1: oklch(0.55 0.22 290);
+  --logo-color-2: oklch(0.5 0.2 250);
+}
+
+.dark {
+  --background: oklch(0.15 0.014 264);
+  --foreground: oklch(0.97 0.003 264);
+  --card: oklch(0.205 0.014 264);
+  --card-foreground: oklch(0.97 0.003 264);
+  --popover: oklch(0.19 0.014 264);
+  --popover-foreground: oklch(0.97 0.003 264);
+  --primary: oklch(0.93 0.004 264);
+  --primary-foreground: oklch(0.17 0.014 264);
+  --secondary: oklch(0.27 0.014 264);
+  --secondary-foreground: oklch(0.97 0.003 264);
+  --muted: oklch(0.25 0.014 264);
+  --muted-foreground: oklch(0.7 0.012 264);
+  --accent: oklch(0.28 0.02 280);
+  --accent-foreground: oklch(0.97 0.003 264);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.6 0.02 264);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0.014 264);
+  --sidebar-foreground: oklch(0.97 0.003 264);
+  --sidebar-primary: oklch(0.488 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0.014 264);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+
+  /* ambient decorative glows — richer, more saturated for depth on dark backgrounds */
+  --glow-1: oklch(0.58 0.19 290 / 26%);
+  --glow-2: oklch(0.62 0.16 235 / 20%);
+  --glow-3: oklch(0.68 0.15 55 / 11%);
+  --glow-strong: oklch(0.6 0.2 290 / 32%);
+
+  /* soft inner highlight + deep drop shadow instead of a flat black card */
+  --shadow-surface: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 24px 48px -28px rgba(0, 0, 0, 0.75);
+  --shadow-surface-hover: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 0 40px -10px var(--glow-1),
+    0 28px 56px -24px rgba(0, 0, 0, 0.85);
+
+  /* neutral tint pair used for avatar/icon placeholder gradients */
+  --avatar-glow-a: oklch(1 0 0 / 18%);
+  --avatar-glow-b: oklch(1 0 0 / 4%);
+
+  /* hero rotating-word accent — brighter violet/blue so it reads clearly on dark backgrounds */
+  --hero-word-gradient: linear-gradient(135deg, oklch(0.75 0.18 290), oklch(0.72 0.16 235));
+  --hero-word-accent: oklch(0.75 0.18 290);
+
+  /* logo mark gradient stops — brighter for contrast on dark backgrounds */
+  --logo-color-1: oklch(0.75 0.18 290);
+  --logo-color-2: oklch(0.72 0.16 235);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* smooth cross-fade whenever the theme toggles — transitions the resolved
+     color values, so it animates even though the underlying custom
+     properties themselves aren't transitionable */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-timing-function: ease;
+    transition-duration: 300ms;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility shadow-surface {
+  box-shadow: var(--shadow-surface);
+  transition: box-shadow 300ms ease;
+
+  &:hover {
+    box-shadow: var(--shadow-surface-hover);
+  }
+}
+
+@utility glow-mesh {
+  background-image:
+    radial-gradient(ellipse 70% 50% at 15% 0%, var(--glow-1), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 100% 10%, var(--glow-2), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 50% 100%, var(--glow-3), transparent 70%);
+  background-repeat: no-repeat;
+  background-size: 140% 140%;
+  background-position: 0% 0%;
+}
+
+@keyframes glow-drift {
+  0%,
+  100% {
+    background-position:
+      0% 0%,
+      100% 10%,
+      50% 100%;
+  }
+  50% {
+    background-position:
+      8% 6%,
+      92% 2%,
+      55% 92%;
+  }
+}
+
+@utility animate-glow-drift {
+  animation: glow-drift 14s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@utility animate-glow-pulse {
+  animation: glow-pulse 6s ease-in-out infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@utility animate-caret-blink {
+  animation: caret-blink 1s step-end infinite;
 }
