@@ -13,7 +13,8 @@ const routes = [
   "/blog",
   "/faq",
   "/contact",
-  "/legal",
+  "/privacy",
+  "/terms",
   ...Object.keys(serviceDetails).map((slug) => `/services/${slug}`),
   ...blogPosts.filter((post) => post.body).map((post) => `/blog/${post.slug}`),
 ];

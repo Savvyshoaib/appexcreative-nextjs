@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.pravatar.cc" },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/legal", destination: "/privacy", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
