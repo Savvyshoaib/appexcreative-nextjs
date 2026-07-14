@@ -11,13 +11,13 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
     <GsapHoverCard>
       <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card shadow-surface transition-[border-color] duration-300 hover:border-(--accent-border)">
         <div className="relative h-40 overflow-hidden">
-          <GsapParallax speed={28} className="absolute inset-[-10%] h-[120%] w-full">
+          <GsapParallax speed={28} className="absolute -inset-[18%]">
             <Image
               src={post.image}
               alt=""
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+              className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
             />
           </GsapParallax>
           <Badge variant="secondary" className="absolute left-3 top-3">

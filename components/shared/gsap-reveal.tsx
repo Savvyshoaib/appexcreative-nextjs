@@ -14,7 +14,6 @@ type GsapRevealProps = {
   children: ReactNode;
   className?: string;
   preset?: RevealPreset;
-  /** Vertical / horizontal offset in px before reveal */
   distance?: number;
   delay?: number;
   duration?: number;
@@ -23,16 +22,16 @@ type GsapRevealProps = {
 function fromVars(preset: RevealPreset, distance: number) {
   switch (preset) {
     case "fade":
-      return { autoAlpha: 0 };
+      return { opacity: 0 };
     case "scale":
-      return { autoAlpha: 0, scale: 0.96 };
+      return { opacity: 0, scale: 0.97 };
     case "fade-left":
-      return { autoAlpha: 0, x: -distance };
+      return { opacity: 0, x: -distance };
     case "fade-right":
-      return { autoAlpha: 0, x: distance };
+      return { opacity: 0, x: distance };
     case "fade-up":
     default:
-      return { autoAlpha: 0, y: distance };
+      return { opacity: 0, y: distance };
   }
 }
 
@@ -40,9 +39,9 @@ export function GsapReveal({
   children,
   className,
   preset = "fade-up",
-  distance = 32,
+  distance = 28,
   delay = 0,
-  duration = 0.8,
+  duration = 0.75,
 }: GsapRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -57,24 +56,40 @@ export function GsapReveal({
         return;
       }
 
-      gsap.fromTo(el, fromVars(preset, distance), {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        duration,
-        delay,
-        ease: "power3.out",
-        clearProps: "transform",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 88%",
-          once: true,
-          fastScrollEnd: true,
-        },
+      const play = () => {
+        gsap.to(el, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration,
+          delay,
+          ease: "power3.out",
+          overwrite: "auto",
+          clearProps: "transform",
+        });
+      };
+
+      gsap.set(el, fromVars(preset, distance));
+
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top 92%",
+        once: true,
+        onEnter: play,
       });
 
+      // Already in view on mount (common on Work / short viewports)
+      if (ScrollTrigger.isInViewport(el, 0.05)) {
+        play();
+      }
+
       requestAnimationFrame(() => ScrollTrigger.refresh());
+
+      return () => {
+        st.kill();
+        gsap.set(el, { clearProps: "all" });
+      };
     },
     { dependencies: [prefersReducedMotion, preset, distance, delay, duration], scope: ref }
   );
@@ -99,7 +114,7 @@ export function GsapStagger({
   children,
   className,
   stagger = 0.08,
-  distance = 24,
+  distance = 22,
   preset = "fade-up",
   childSelector = ":scope > *",
 }: GsapStaggerProps) {
@@ -119,24 +134,39 @@ export function GsapStagger({
         return;
       }
 
-      gsap.fromTo(items, fromVars(preset, distance), {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        duration: 0.7,
-        stagger,
-        ease: "power3.out",
-        clearProps: "transform",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 88%",
-          once: true,
-          fastScrollEnd: true,
-        },
+      const play = () => {
+        gsap.to(items, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          stagger,
+          ease: "power3.out",
+          overwrite: "auto",
+          clearProps: "transform",
+        });
+      };
+
+      gsap.set(items, fromVars(preset, distance));
+
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top 92%",
+        once: true,
+        onEnter: play,
       });
 
+      if (ScrollTrigger.isInViewport(el, 0.05)) {
+        play();
+      }
+
       requestAnimationFrame(() => ScrollTrigger.refresh());
+
+      return () => {
+        st.kill();
+        gsap.set(items, { clearProps: "all" });
+      };
     },
     {
       dependencies: [prefersReducedMotion, stagger, distance, preset, childSelector],
@@ -154,11 +184,9 @@ export function GsapStagger({
 type GsapParallaxProps = {
   children: ReactNode;
   className?: string;
-  /** Max travel in px (positive = moves slower / upward feel) */
   speed?: number;
 };
 
-/** Subtle scroll-linked parallax for images / decorative layers. */
 export function GsapParallax({
   children,
   className,
@@ -190,6 +218,7 @@ export function GsapParallax({
       return () => {
         tween.scrollTrigger?.kill();
         tween.kill();
+        gsap.set(el, { clearProps: "transform" });
       };
     },
     { dependencies: [prefersReducedMotion, speed], scope: ref }
@@ -207,10 +236,6 @@ type GsapHoverCardProps = {
   className?: string;
 };
 
-/**
- * Premium card micro-interaction: soft lift + scale on pointer enter.
- * Keyboard / touch-safe — no motion without pointer hover.
- */
 export function GsapHoverCard({ children, className }: GsapHoverCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -226,6 +251,7 @@ export function GsapHoverCard({ children, className }: GsapHoverCardProps) {
           scale: 1.01,
           duration: 0.4,
           ease: "power3.out",
+          overwrite: "auto",
         });
       };
       const onLeave = () => {
@@ -234,6 +260,7 @@ export function GsapHoverCard({ children, className }: GsapHoverCardProps) {
           scale: 1,
           duration: 0.45,
           ease: "power3.out",
+          overwrite: "auto",
         });
       };
 

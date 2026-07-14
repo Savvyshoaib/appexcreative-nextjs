@@ -3,15 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { GsapHoverCard, GsapParallax } from "@/components/shared/gsap-reveal";
+import { CaseStudyShowcase } from "@/components/sections/case-study-showcase";
+import { cn } from "@/lib/utils";
 
 export type CaseStudy = {
   slug: string;
@@ -26,27 +21,54 @@ export type CaseStudy = {
   result: string;
 };
 
-export function CaseStudyCard({ study }: { study: CaseStudy }) {
+export function CaseStudyCard({
+  study,
+  featured = false,
+}: {
+  study: CaseStudy;
+  featured?: boolean;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <GsapHoverCard>
         <button
+          type="button"
           onClick={() => setOpen(true)}
-          className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card text-left shadow-surface transition-[border-color,box-shadow] duration-300 hover:border-(--accent-border)"
+          className={cn(
+            "group relative flex w-full overflow-hidden rounded-2xl border border-foreground/10 bg-card text-left shadow-surface transition-[border-color,box-shadow] duration-300 hover:border-(--accent-border)",
+            featured
+              ? "flex-col lg:min-h-[420px] lg:flex-row"
+              : "h-full flex-col"
+          )}
         >
-          <div className="relative h-64 overflow-hidden sm:h-72 lg:h-80">
-            <GsapParallax speed={36} className="absolute inset-[-12%] h-[124%] w-full">
+          <div
+            className={cn(
+              "relative overflow-hidden",
+              featured
+                ? "h-72 sm:h-80 lg:h-auto lg:w-[58%] lg:min-h-[420px]"
+                : "h-64 sm:h-72 lg:h-80"
+            )}
+          >
+            <GsapParallax
+              speed={featured ? 28 : 36}
+              className="absolute -inset-[18%]"
+            >
               <Image
                 src={study.image}
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                sizes={
+                  featured
+                    ? "(min-width: 1024px) 55vw, 100vw"
+                    : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                }
+                className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                priority={featured}
               />
             </GsapParallax>
-            <div className="absolute inset-0 bg-linear-to-t from-black/88 via-black/30 to-black/0 transition-opacity duration-500 group-hover:from-black/92" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/0 transition-opacity duration-500 group-hover:from-black/90 lg:group-hover:via-black/35" />
 
             <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 sm:p-6">
               <Badge
@@ -60,48 +82,67 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
               </span>
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <p className="text-sm font-medium text-white/70">{study.client}</p>
-              <p className="mt-1 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                {study.metricValue}
-              </p>
-              <p className="mt-1 text-sm text-white/80">{study.metricLabel}</p>
-            </div>
+            {!featured ? (
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                <p className="text-sm font-medium text-white/70">{study.client}</p>
+                <p className="mt-1 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                  {study.metricValue}
+                </p>
+                <p className="mt-1 text-sm text-white/80">{study.metricLabel}</p>
+              </div>
+            ) : (
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:hidden">
+                <p className="text-sm font-medium text-white/70">{study.client}</p>
+                <p className="mt-1 text-4xl font-semibold tracking-tight text-white">
+                  {study.metricValue}
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="p-5 sm:p-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              {study.summary}
-            </p>
-          </div>
+          {featured ? (
+            <div className="flex flex-1 flex-col justify-center p-6 sm:p-8 lg:p-10">
+              <p className="text-xs font-medium tracking-wide text-(--hero-word-accent) uppercase">
+                Featured engagement
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                {study.client}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
+                {study.summary}
+              </p>
+              <div className="mt-8 border-t border-foreground/10 pt-6">
+                <p className="bg-(image:--counter-gradient) bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl">
+                  {study.metricValue}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {study.metricLabel}
+                </p>
+              </div>
+              <p className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                View case study
+                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {study.summary}
+              </p>
+              <p className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
+                View case study
+                <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </p>
+            </div>
+          )}
         </button>
       </GsapHoverCard>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <Badge variant="secondary" className="w-fit">
-              {study.industry}
-            </Badge>
-            <DialogTitle className="mt-2 text-2xl">{study.client}</DialogTitle>
-            <DialogDescription>{study.summary}</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 text-sm text-muted-foreground">
-            <div>
-              <h4 className="font-medium text-foreground">Challenge</h4>
-              <p className="mt-1">{study.challenge}</p>
-            </div>
-            <div>
-              <h4 className="font-medium text-foreground">Approach</h4>
-              <p className="mt-1">{study.approach}</p>
-            </div>
-            <div>
-              <h4 className="font-medium text-foreground">Result</h4>
-              <p className="mt-1">{study.result}</p>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <CaseStudyShowcase
+        study={study}
+        open={open}
+        onOpenChange={setOpen}
+      />
     </>
   );
 }
