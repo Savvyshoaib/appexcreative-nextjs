@@ -13,7 +13,7 @@ export function IndustryCard({ industry }: { industry: Industry }) {
   const Icon = industry.icon;
 
   return (
-    <StaggerItem className="rounded-xl border border-foreground/10 bg-card shadow-surface p-6">
+    <StaggerItem className="rounded-2xl border border-foreground/10 bg-card p-6 shadow-surface transition-colors hover:border-(--accent-border) hover:bg-accent/30 sm:p-7">
       <div className="flex size-10 items-center justify-center rounded-lg bg-(image:--chip-gradient) dark:bg-none dark:bg-foreground/10">
         <Icon className="size-5 text-foreground" />
       </div>

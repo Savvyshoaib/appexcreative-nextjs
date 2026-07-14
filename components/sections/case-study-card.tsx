@@ -11,7 +11,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { StaggerItem } from "@/components/shared/reveal";
+import { GsapHoverCard, GsapParallax } from "@/components/shared/gsap-reveal";
 
 export type CaseStudy = {
   slug: string;
@@ -31,49 +31,51 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
 
   return (
     <>
-      <StaggerItem>
+      <GsapHoverCard>
         <button
           onClick={() => setOpen(true)}
-          className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card text-left shadow-surface"
+          className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card text-left shadow-surface transition-[border-color,box-shadow] duration-300 hover:border-(--accent-border)"
         >
-          <div className="relative h-72 overflow-hidden sm:h-80">
-            <Image
-              src={study.image}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-black/0 transition-opacity duration-500 group-hover:from-black/90" />
+          <div className="relative h-64 overflow-hidden sm:h-72 lg:h-80">
+            <GsapParallax speed={36} className="absolute inset-[-12%] h-[124%] w-full">
+              <Image
+                src={study.image}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+              />
+            </GsapParallax>
+            <div className="absolute inset-0 bg-linear-to-t from-black/88 via-black/30 to-black/0 transition-opacity duration-500 group-hover:from-black/92" />
 
-            <div className="absolute inset-x-0 top-0 flex items-center justify-between p-6">
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 sm:p-6">
               <Badge
                 variant="secondary"
                 className="border-0 bg-white/15 text-white backdrop-blur-sm"
               >
                 {study.industry}
               </Badge>
-              <span className="flex size-9 items-center justify-center rounded-full bg-white/15 text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className="flex size-9 items-center justify-center rounded-full bg-white/15 text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100">
                 <ArrowUpRight className="size-4" />
               </span>
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <p className="text-sm font-medium text-white/70">
-                {study.client}
-              </p>
-              <p className="mt-1 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <p className="text-sm font-medium text-white/70">{study.client}</p>
+              <p className="mt-1 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
                 {study.metricValue}
               </p>
               <p className="mt-1 text-sm text-white/80">{study.metricLabel}</p>
             </div>
           </div>
 
-          <div className="p-6">
-            <p className="text-sm text-muted-foreground">{study.summary}</p>
+          <div className="p-5 sm:p-6">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {study.summary}
+            </p>
           </div>
         </button>
-      </StaggerItem>
+      </GsapHoverCard>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg">

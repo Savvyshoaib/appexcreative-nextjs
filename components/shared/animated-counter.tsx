@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "motion/react";
+import { useInView, useMotionValue, useSpring } from "motion/react";
 import { usePrefersReducedMotion } from "@/lib/motion-config";
+import { cn } from "@/lib/utils";
 
 type AnimatedCounterProps = {
   value: number;
@@ -32,11 +33,19 @@ export function AnimatedCounter({
 
   useEffect(() => {
     if (isInView) {
-      motionValue.set(prefersReducedMotion ? value : value);
+      motionValue.set(value);
     }
   }, [isInView, motionValue, value, prefersReducedMotion]);
 
   useEffect(() => {
+    if (prefersReducedMotion && isInView && ref.current) {
+      const formatted = decimals
+        ? value.toFixed(decimals)
+        : Math.round(value).toLocaleString();
+      ref.current.textContent = `${prefix}${formatted}${suffix}`;
+      return;
+    }
+
     const unsubscribe = springValue.on("change", (latest) => {
       if (ref.current) {
         const formatted = decimals
@@ -46,13 +55,16 @@ export function AnimatedCounter({
       }
     });
     return unsubscribe;
-  }, [springValue, prefix, suffix, decimals]);
+  }, [springValue, prefix, suffix, decimals, prefersReducedMotion, isInView, value]);
 
   return (
     <div className="text-center">
       <span
         ref={ref}
-        className="block bg-(image:--counter-gradient) bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl dark:bg-none dark:bg-clip-border dark:text-foreground"
+        className={cn(
+          "block text-4xl font-semibold tracking-tight sm:text-5xl",
+          "bg-(image:--counter-gradient) bg-clip-text text-transparent"
+        )}
       >
         {prefix}0{suffix}
       </span>
@@ -67,10 +79,10 @@ export function AnimatedCounterRow({
   items: AnimatedCounterProps[];
 }) {
   return (
-    <motion.div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-8 rounded-2xl border border-foreground/10 bg-card/60 p-6 shadow-surface backdrop-blur-sm sm:grid-cols-4 sm:gap-6 sm:p-8">
       {items.map((item) => (
         <AnimatedCounter key={item.label} {...item} />
       ))}
-    </motion.div>
+    </div>
   );
 }

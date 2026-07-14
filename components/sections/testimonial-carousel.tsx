@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Reveal } from "@/components/shared/reveal";
+import { GsapReveal } from "@/components/shared/gsap-reveal";
 
 export type Testimonial = {
   name: string;
@@ -22,23 +22,27 @@ export type Testimonial = {
 
 export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
   return (
-    <Reveal>
+    <GsapReveal>
       <Carousel className="mx-auto w-full max-w-3xl">
         <CarouselContent>
           {items.map((item) => (
             <CarouselItem key={item.name}>
-              <div className="rounded-xl border border-foreground/10 bg-card shadow-surface p-10 text-center">
-                <Quote className="mx-auto size-6 text-muted-foreground/50" />
-                <p className="mt-6 text-xl text-balance text-foreground">
+              <figure className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-card p-8 shadow-surface sm:p-10">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-[radial-gradient(circle,var(--glow-1),transparent_70%)]"
+                />
+                <Quote className="relative size-7 text-(--hero-word-accent)/50" />
+                <blockquote className="relative mt-5 text-left text-lg text-balance text-foreground sm:text-xl sm:leading-relaxed">
                   &ldquo;{item.quote}&rdquo;
-                </p>
-                <div className="mt-8 flex items-center justify-center gap-3">
-                  <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
+                </blockquote>
+                <figcaption className="relative mt-8 flex items-center gap-3 border-t border-foreground/10 pt-6">
+                  <div className="relative size-11 shrink-0 overflow-hidden rounded-full ring-2 ring-(--accent-border)">
                     <Image
                       src={item.photo}
                       alt={item.name}
                       fill
-                      sizes="40px"
+                      sizes="44px"
                       className="object-cover"
                     />
                   </div>
@@ -50,14 +54,16 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
                       {item.role}, {item.company}
                     </p>
                   </div>
-                </div>
-              </div>
+                </figcaption>
+              </figure>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="static mt-6 mr-2 translate-y-0" />
-        <CarouselNext className="static mt-6 translate-y-0" />
+        <div className="mt-6 flex items-center justify-center gap-2">
+          <CarouselPrevious className="static translate-y-0" />
+          <CarouselNext className="static translate-y-0" />
+        </div>
       </Carousel>
-    </Reveal>
+    </GsapReveal>
   );
 }

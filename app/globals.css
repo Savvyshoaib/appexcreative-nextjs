@@ -49,7 +49,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(0.995 0.002 264);
   --foreground: oklch(0.16 0.004 264);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.16 0.004 264);
@@ -61,12 +61,12 @@
   --secondary-foreground: oklch(0.18 0.006 264);
   --muted: oklch(0.97 0.003 264);
   --muted-foreground: oklch(0.48 0.006 264);
-  --accent: oklch(0.96 0.008 280);
+  --accent: oklch(0.96 0.012 280);
   --accent-foreground: oklch(0.18 0.006 264);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.004 264);
-  --input: oklch(0.923 0.004 264);
-  --ring: oklch(0.6 0.02 264);
+  --border: oklch(0.9 0.006 264);
+  --input: oklch(0.9 0.006 264);
+  --ring: oklch(0.55 0.12 285);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -82,102 +82,129 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* ambient decorative glows — bold, saturated color washes so light mode reads
-     as premium rather than flat white. Tuned to be clearly visible at a glance. */
-  --glow-1: oklch(0.62 0.2 290 / 30%);
-  --glow-2: oklch(0.68 0.19 235 / 26%);
-  --glow-3: oklch(0.76 0.17 55 / 20%);
-  --glow-strong: oklch(0.56 0.22 290 / 36%);
+  /* ambient decorative glows — full-bleed washes that stay soft at edges */
+  --glow-1: oklch(0.62 0.2 290 / 28%);
+  --glow-2: oklch(0.68 0.19 235 / 22%);
+  --glow-3: oklch(0.76 0.15 55 / 16%);
+  --glow-strong: oklch(0.56 0.22 290 / 32%);
 
-  /* soft, layered card shadows — a visible color tint mixed into the drop shadow instead of flat gray */
-  --shadow-surface: 0 1px 2px rgba(15, 15, 20, 0.06), 0 16px 32px -16px rgba(88, 40, 160, 0.22);
-  --shadow-surface-hover: 0 2px 4px rgba(15, 15, 20, 0.07), 0 0 40px -10px var(--glow-1),
-    0 24px 44px -14px rgba(88, 40, 160, 0.28);
+  --shadow-surface: 0 1px 2px rgba(15, 15, 20, 0.05), 0 16px 36px -18px rgba(88, 40, 160, 0.18);
+  --shadow-surface-hover: 0 2px 4px rgba(15, 15, 20, 0.06), 0 0 40px -12px var(--glow-1),
+    0 24px 48px -16px rgba(88, 40, 160, 0.24);
 
-  /* neutral tint pair used for avatar/icon placeholder gradients */
   --avatar-glow-a: oklch(0.16 0.004 264 / 8%);
   --avatar-glow-b: oklch(0.16 0.004 264 / 3%);
 
-  /* light-mode-only premium accents — decorative gradients used for chips, badges,
-     pricing highlight and stat numbers. Dark mode intentionally does not define
-     these; every consuming class carries an explicit dark: override so dark mode
-     stays pixel-identical. */
-  --chip-gradient: linear-gradient(135deg, oklch(0.86 0.09 290), oklch(0.85 0.1 235));
-  --badge-gradient: linear-gradient(135deg, oklch(0.6 0.19 290), oklch(0.58 0.16 250));
+  --chip-gradient: linear-gradient(135deg, oklch(0.9 0.06 290), oklch(0.88 0.07 235));
+  --badge-gradient: linear-gradient(135deg, oklch(0.58 0.2 290), oklch(0.55 0.17 250));
   --pricing-highlight: linear-gradient(
-    160deg,
-    oklch(0.94 0.05 290),
-    oklch(0.93 0.055 250) 55%,
-    oklch(0.92 0.06 55 / 80%)
+    165deg,
+    oklch(0.97 0.03 290),
+    oklch(0.95 0.04 250) 50%,
+    oklch(0.96 0.035 55 / 70%)
   );
-  --pricing-ring: oklch(0.58 0.19 285 / 55%);
-  --counter-gradient: linear-gradient(135deg, oklch(0.22 0.01 264), oklch(0.42 0.19 285));
-  --accent-border: oklch(0.6 0.16 285 / 35%);
+  --pricing-ring: oklch(0.55 0.18 285 / 40%);
+  --counter-gradient: linear-gradient(135deg, oklch(0.22 0.02 264), oklch(0.42 0.2 285));
+  --accent-border: oklch(0.55 0.16 285 / 30%);
+  --surface-tint: oklch(0.97 0.012 280 / 70%);
+  --cta-surface: linear-gradient(
+    160deg,
+    oklch(0.2 0.04 280),
+    oklch(0.16 0.05 264) 55%,
+    oklch(0.18 0.04 250)
+  );
+  --cta-foreground: oklch(0.98 0.005 264);
+  --cta-muted: oklch(0.85 0.02 264);
+  --section-wash: linear-gradient(
+    180deg,
+    transparent,
+    oklch(0.97 0.01 280 / 55%) 40%,
+    transparent
+  );
 
-  /* hero rotating-word accent (used in both themes — see .dark below for its counterpart) */
-  --hero-word-gradient: linear-gradient(135deg, oklch(0.55 0.22 290), oklch(0.5 0.2 250));
-  --hero-word-accent: oklch(0.55 0.22 290);
-
-  /* logo mark gradient stops (same brand violet→blue as the hero accent) */
-  --logo-color-1: oklch(0.55 0.22 290);
-  --logo-color-2: oklch(0.5 0.2 250);
+  --hero-word-gradient: linear-gradient(135deg, oklch(0.52 0.22 290), oklch(0.48 0.2 250));
+  --hero-word-accent: oklch(0.52 0.22 290);
+  --logo-color-1: oklch(0.52 0.22 290);
+  --logo-color-2: oklch(0.48 0.2 250);
 }
 
 .dark {
-  --background: oklch(0.15 0.014 264);
+  --background: oklch(0.145 0.016 264);
   --foreground: oklch(0.97 0.003 264);
-  --card: oklch(0.205 0.014 264);
+  --card: oklch(0.195 0.016 264);
   --card-foreground: oklch(0.97 0.003 264);
-  --popover: oklch(0.19 0.014 264);
+  --popover: oklch(0.185 0.016 264);
   --popover-foreground: oklch(0.97 0.003 264);
-  --primary: oklch(0.93 0.004 264);
-  --primary-foreground: oklch(0.17 0.014 264);
-  --secondary: oklch(0.27 0.014 264);
+  --primary: oklch(0.94 0.01 264);
+  --primary-foreground: oklch(0.16 0.016 264);
+  --secondary: oklch(0.25 0.016 264);
   --secondary-foreground: oklch(0.97 0.003 264);
-  --muted: oklch(0.25 0.014 264);
-  --muted-foreground: oklch(0.7 0.012 264);
-  --accent: oklch(0.28 0.02 280);
+  --muted: oklch(0.24 0.014 264);
+  --muted-foreground: oklch(0.72 0.014 264);
+  --accent: oklch(0.26 0.03 280);
   --accent-foreground: oklch(0.97 0.003 264);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.6 0.02 264);
+  --border: oklch(1 0 0 / 11%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.68 0.12 290);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0.014 264);
+  --sidebar: oklch(0.195 0.016 264);
   --sidebar-foreground: oklch(0.97 0.003 264);
   --sidebar-primary: oklch(0.488 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0.014 264);
+  --sidebar-accent: oklch(0.26 0.016 264);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  /* ambient decorative glows — richer, more saturated for depth on dark backgrounds */
-  --glow-1: oklch(0.58 0.19 290 / 26%);
-  --glow-2: oklch(0.62 0.16 235 / 20%);
-  --glow-3: oklch(0.68 0.15 55 / 11%);
-  --glow-strong: oklch(0.6 0.2 290 / 32%);
+  --glow-1: oklch(0.58 0.2 290 / 30%);
+  --glow-2: oklch(0.62 0.17 235 / 22%);
+  --glow-3: oklch(0.68 0.14 55 / 12%);
+  --glow-strong: oklch(0.62 0.22 290 / 36%);
 
-  /* soft inner highlight + deep drop shadow instead of a flat black card */
-  --shadow-surface: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 24px 48px -28px rgba(0, 0, 0, 0.75);
-  --shadow-surface-hover: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 0 40px -10px var(--glow-1),
-    0 28px 56px -24px rgba(0, 0, 0, 0.85);
+  --shadow-surface: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 48px -28px rgba(0, 0, 0, 0.7);
+  --shadow-surface-hover: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 44px -10px var(--glow-1),
+    0 28px 56px -24px rgba(0, 0, 0, 0.8);
 
-  /* neutral tint pair used for avatar/icon placeholder gradients */
-  --avatar-glow-a: oklch(1 0 0 / 18%);
+  --avatar-glow-a: oklch(1 0 0 / 16%);
   --avatar-glow-b: oklch(1 0 0 / 4%);
 
-  /* hero rotating-word accent — brighter violet/blue so it reads clearly on dark backgrounds */
-  --hero-word-gradient: linear-gradient(135deg, oklch(0.75 0.18 290), oklch(0.72 0.16 235));
-  --hero-word-accent: oklch(0.75 0.18 290);
+  /* parity tokens — same roles as light so gradients never "cut off" or disappear */
+  --chip-gradient: linear-gradient(135deg, oklch(0.32 0.06 290), oklch(0.3 0.055 235));
+  --badge-gradient: linear-gradient(135deg, oklch(0.68 0.18 290), oklch(0.64 0.16 250));
+  --pricing-highlight: linear-gradient(
+    165deg,
+    oklch(0.26 0.04 290),
+    oklch(0.22 0.035 250) 50%,
+    oklch(0.24 0.03 55 / 50%)
+  );
+  --pricing-ring: oklch(0.7 0.16 290 / 45%);
+  --counter-gradient: linear-gradient(135deg, oklch(0.95 0.02 264), oklch(0.78 0.16 290));
+  --accent-border: oklch(0.7 0.14 290 / 35%);
+  --surface-tint: oklch(0.2 0.025 280 / 55%);
+  --cta-surface: linear-gradient(
+    160deg,
+    oklch(0.28 0.06 290),
+    oklch(0.22 0.05 264) 55%,
+    oklch(0.24 0.05 235)
+  );
+  --cta-foreground: oklch(0.98 0.005 264);
+  --cta-muted: oklch(0.82 0.02 264);
+  --section-wash: linear-gradient(
+    180deg,
+    transparent,
+    oklch(0.2 0.03 280 / 45%) 40%,
+    transparent
+  );
 
-  /* logo mark gradient stops — brighter for contrast on dark backgrounds */
-  --logo-color-1: oklch(0.75 0.18 290);
-  --logo-color-2: oklch(0.72 0.16 235);
+  --hero-word-gradient: linear-gradient(135deg, oklch(0.78 0.17 290), oklch(0.74 0.15 235));
+  --hero-word-accent: oklch(0.78 0.17 290);
+  --logo-color-1: oklch(0.78 0.17 290);
+  --logo-color-2: oklch(0.74 0.15 235);
 }
 
 @layer base {
@@ -198,15 +225,13 @@
     }
   }
 
-  /* smooth cross-fade whenever the theme toggles — transitions the resolved
-     color values, so it animates even though the underlying custom
-     properties themselves aren't transitionable */
-  *,
-  *::before,
-  *::after {
+  /* Theme cross-fade scoped to surfaces — avoids fighting GSAP transforms */
+  body,
+  [data-slot],
+  .theme-surface {
     transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-timing-function: ease;
-    transition-duration: 300ms;
+    transition-duration: 280ms;
   }
 }
 
@@ -219,34 +244,32 @@
   }
 }
 
+/* Full-bleed mesh that never clips — oversized soft ellipses + cover sizing */
 @utility glow-mesh {
   background-image:
-    radial-gradient(ellipse 70% 50% at 15% 0%, var(--glow-1), transparent 65%),
-    radial-gradient(ellipse 60% 45% at 100% 10%, var(--glow-2), transparent 65%),
-    radial-gradient(ellipse 55% 40% at 50% 100%, var(--glow-3), transparent 70%);
+    radial-gradient(ellipse 90% 70% at 18% -5%, var(--glow-1), transparent 72%),
+    radial-gradient(ellipse 80% 65% at 102% 8%, var(--glow-2), transparent 72%),
+    radial-gradient(ellipse 75% 55% at 48% 105%, var(--glow-3), transparent 75%);
   background-repeat: no-repeat;
-  background-size: 140% 140%;
-  background-position: 0% 0%;
+  background-size: 100% 100%;
+  background-position: center;
 }
 
 @keyframes glow-drift {
   0%,
   100% {
-    background-position:
-      0% 0%,
-      100% 10%,
-      50% 100%;
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
   }
   50% {
-    background-position:
-      8% 6%,
-      92% 2%,
-      55% 92%;
+    opacity: 0.88;
+    transform: scale(1.04) translate3d(1.5%, -1%, 0);
   }
 }
 
 @utility animate-glow-drift {
-  animation: glow-drift 14s ease-in-out infinite;
+  animation: glow-drift 16s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes marquee {
@@ -262,18 +285,25 @@
   animation: marquee 32s linear infinite;
 }
 
+@utility paused {
+  animation-play-state: paused;
+}
+
 @keyframes glow-pulse {
   0%,
   100% {
-    opacity: 0.7;
+    opacity: 0.65;
+    transform: scale(1);
   }
   50% {
     opacity: 1;
+    transform: scale(1.06);
   }
 }
 
 @utility animate-glow-pulse {
-  animation: glow-pulse 6s ease-in-out infinite;
+  animation: glow-pulse 7s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes caret-blink {
@@ -292,4 +322,39 @@
 
 @utility animate-caret-blink {
   animation: caret-blink 1s step-end infinite;
+}
+
+@utility text-gradient {
+  background-image: var(--counter-gradient);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-chip {
+  background-image: var(--chip-gradient);
+}
+
+@utility bg-pricing-highlight {
+  background-image: var(--pricing-highlight);
+}
+
+@utility bg-cta-surface {
+  background-image: var(--cta-surface);
+}
+
+@utility bg-section-wash {
+  background-image: var(--section-wash);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-drift,
+  .animate-glow-pulse,
+  .animate-marquee,
+  .animate-caret-blink {
+    animation: none !important;
+  }
+
+  [data-slot="button"] {
+    transform: none !important;
+  }
 }

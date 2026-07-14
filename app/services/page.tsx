@@ -2,7 +2,8 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { Reveal, Stagger } from "@/components/shared/reveal";
+import { Reveal } from "@/components/shared/reveal";
+import { GsapStagger } from "@/components/shared/gsap-reveal";
 import { ServiceCard } from "@/components/sections/service-card";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { CTASection } from "@/components/sections/cta-section";
@@ -73,22 +74,22 @@ export default function ServicesPage() {
               </TabsList>
 
               <TabsContent value="all" className="mt-12">
-                <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <GsapStagger className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                   {services.map((service) => (
                     <ServiceCard key={service.slug} service={service} />
                   ))}
-                </Stagger>
+                </GsapStagger>
               </TabsContent>
 
               {serviceCategories.map((category) => (
                 <TabsContent key={category.slug} value={category.slug} className="mt-12">
-                  <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <GsapStagger className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                     {services
                       .filter((service) => service.category === category.slug)
                       .map((service) => (
                         <ServiceCard key={service.slug} service={service} />
                       ))}
-                  </Stagger>
+                  </GsapStagger>
                 </TabsContent>
               ))}
             </Tabs>

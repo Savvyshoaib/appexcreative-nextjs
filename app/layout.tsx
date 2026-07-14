@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
+import { AmbientGlow } from "@/components/shared/ambient-glow";
 import { siteConfig } from "@/content/site-config";
 
 const geistSans = Geist({
@@ -54,8 +55,10 @@ export default function RootLayout({
         <ThemeProvider>
           <div
             aria-hidden
-            className="glow-mesh animate-glow-drift dark:animate-none pointer-events-none fixed inset-0 -z-50 h-full w-full"
-          />
+            className="pointer-events-none fixed inset-0 -z-50 overflow-hidden"
+          >
+            <AmbientGlow className="min-h-full w-full" />
+          </div>
           <Navbar />
           <main className="flex-1 pt-16">{children}</main>
           <Footer />

@@ -1,4 +1,6 @@
-import { Stagger, StaggerItem } from "@/components/shared/reveal";
+"use client";
+
+import { GsapStagger } from "@/components/shared/gsap-reveal";
 import { cn } from "@/lib/utils";
 
 export type ProcessStep = {
@@ -15,31 +17,38 @@ const colsByCount: Record<number, string> = {
 
 export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   return (
-    <Stagger
-      stagger={0.12}
-      className={cn("grid gap-8 md:gap-4", colsByCount[steps.length] ?? "md:grid-cols-5")}
+    <GsapStagger
+      stagger={0.1}
+      preset="fade-up"
+      distance={20}
+      className={cn(
+        "grid gap-6 md:gap-5",
+        colsByCount[steps.length] ?? "md:grid-cols-5"
+      )}
     >
       {steps.map((step, index) => (
-        <StaggerItem key={step.step} className="relative">
-          <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-0">
-            <span className="text-sm font-mono text-muted-foreground/60">
-              {step.step}
-            </span>
-            {index < steps.length - 1 ? (
-              <span
-                aria-hidden
-                className="hidden h-px flex-1 bg-foreground/10 md:mt-3 md:block md:w-full"
-              />
-            ) : null}
+        <div key={step.step} className="relative">
+          {index < steps.length - 1 ? (
+            <span
+              aria-hidden
+              className="absolute top-5 left-12 right-0 hidden h-px bg-linear-to-r from-(--accent-border) via-foreground/10 to-transparent md:block md:-right-2.5"
+            />
+          ) : null}
+          <div className="flex items-start gap-4 md:flex-col md:gap-0">
+            <div className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-(--accent-border) bg-chip font-mono text-xs font-medium text-foreground shadow-surface transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110">
+              {step.step.replace(/^0/, "")}
+            </div>
+            <div className="md:mt-5">
+              <h3 className="text-base font-medium text-foreground">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {step.description}
+              </p>
+            </div>
           </div>
-          <h3 className="mt-3 text-base font-medium text-foreground">
-            {step.title}
-          </h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {step.description}
-          </p>
-        </StaggerItem>
+        </div>
       ))}
-    </Stagger>
+    </GsapStagger>
   );
 }

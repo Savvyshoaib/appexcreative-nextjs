@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/motion-config";
+import { cn } from "@/lib/utils";
 
 type TextRotatorProps = {
   words: string[];
@@ -81,20 +82,20 @@ export function TextRotator({
 
   return (
     <span
-      className={className}
+      className={cn("inline-flex items-center justify-center", className)}
       style={{
         minWidth: `${longestWord.length}ch`,
-        height: "1em",
+        height: "1.1em",
         lineHeight: 1,
       }}
     >
-      <span className="flex items-center bg-(image:--hero-word-gradient) bg-clip-text leading-none text-transparent">
+      <span className="bg-(image:--hero-word-gradient) bg-clip-text leading-none text-transparent">
         {displayed || "​"}
       </span>
       {!prefersReducedMotion ? (
         <span
           aria-hidden
-          className="ml-0.5 inline-block h-[0.85em] w-0.75 animate-caret-blink self-center bg-(--hero-word-accent)"
+          className="ml-0.5 inline-block h-[0.85em] w-0.75 shrink-0 animate-caret-blink bg-(--hero-word-accent)"
         />
       ) : null}
     </span>

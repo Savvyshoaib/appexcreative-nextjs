@@ -31,18 +31,18 @@ export function Navbar() {
       initial={false}
     >
       <div
-        className={`transition-all duration-300 ${
+        className={`theme-surface transition-all duration-300 ${
           scrolled
-            ? "border-b border-foreground/10 bg-background/70 backdrop-blur-xl"
+            ? "border-b border-foreground/10 bg-background/75 shadow-[0_1px_0_0_oklch(0_0_0/3%)] backdrop-blur-xl dark:shadow-none"
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
           <Link href="/" aria-label={siteConfig.name}>
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
             {primaryNav.map((link) => (
               <Link
                 key={link.href}
@@ -54,9 +54,9 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-2 md:flex lg:gap-3">
             <ThemeToggle />
-            <Button asChild variant="ghost" size="sm">
+            <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex">
               <Link href="/faq">FAQ</Link>
             </Button>
             <Button asChild size="sm">

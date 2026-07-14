@@ -30,14 +30,14 @@ function InstagramIcon() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-foreground/10 bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+    <footer className="theme-surface border-t border-foreground/10 bg-background">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2">
             <Link href="/" aria-label={siteConfig.name}>
               <Logo />
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {siteConfig.tagline} Full-service growth and creative agency for
               ambitious brands.
             </p>
