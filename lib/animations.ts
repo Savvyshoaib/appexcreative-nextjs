@@ -10,6 +10,7 @@ export const fadeUp: Variants = {
 };
 
 
+
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: {
