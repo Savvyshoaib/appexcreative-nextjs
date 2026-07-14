@@ -30,12 +30,12 @@ export const legalSections = {
     ],
   },
   terms: {
-    title: "Terms of Service",
+    title: "Terms & Conditions",
     updated: "Last updated: January 1, 2026",
     sections: [
       {
         heading: "Acceptance of terms",
-        body: "By accessing or using this website, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use this site.",
+        body: "By accessing or using this website, you agree to be bound by these Terms & Conditions. If you do not agree to these terms, please do not use this site.",
       },
       {
         heading: "Use of the site",
@@ -47,7 +47,7 @@ export const legalSections = {
       },
       {
         heading: "Engagement terms",
-        body: "Any services provided by Appexcreative Digital are governed by a separate written agreement (statement of work or master services agreement) executed between Appexcreative Digital and the client. These website Terms of Service do not constitute such an agreement.",
+        body: "Any services provided by Appexcreative Digital are governed by a separate written agreement (statement of work or master services agreement) executed between Appexcreative Digital and the client. These website Terms & Conditions do not constitute such an agreement.",
       },
       {
         heading: "Limitation of liability",
